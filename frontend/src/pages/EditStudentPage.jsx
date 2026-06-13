@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getStudentsById, updateStudent } from "../../api/studentapi";
+import { getStudentsById, updateStudent } from "../api/studentapi";
 
 // array of courses
 const COURSES = ["MERN", "React", "Android", "AI", "Graphic"];

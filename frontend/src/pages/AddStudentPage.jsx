@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Container, Form, Badge, Alert } from "react-bootstrap";
-import { addStudent } from "../../api/studentapi";
+import { addStudent } from "../api/studentapi";
 import { useNavigate } from 'react-router-dom';
 
 // array of courses
