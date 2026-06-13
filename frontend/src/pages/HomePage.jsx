@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllStudents } from '../../api/studentapi'; 
+import { getAllStudents } from '../api/studentapi'; 
 import StudentCard from '../component/studentcard';
 import { Alert } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
