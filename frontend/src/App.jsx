@@ -1,4 +1,4 @@
-import NavbarMain from "./component/navbar";
+import NavbarMain from "./component/navbarmain";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import StudentCard from "./component/studentcard";
