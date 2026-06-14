@@ -14,7 +14,7 @@ const EditStudentPage = () => {
     name: "",
     email: "",
     course: "",
-    age: "", // Replaced marks with age
+    age: "", 
     city: "",
   });
 
@@ -35,7 +35,7 @@ const EditStudentPage = () => {
           name: data.name || "",
           email: data.email || "",
           course: data.course || "",
-          age: data.age || "", // Replaced marks with age
+          age: data.age || "", 
           city: data.city || "",
         });
       } catch (err) {
@@ -86,7 +86,7 @@ const EditStudentPage = () => {
           <Form.Group className="mb-3">
             <Form.Label>Name:</Form.Label>
             <Form.Control
-              value={formData.name} // Fixed quotes
+              value={formData.name}
               onChange={handleChange}
               type="text"
               name="name"
@@ -121,7 +121,6 @@ const EditStudentPage = () => {
             </Form.Select>
           </Form.Group>
 
-          {/* Replaced Marks Group with Age */}
           <Form.Group className="mb-3">
             <Form.Label>Age:</Form.Label>
             <Form.Control

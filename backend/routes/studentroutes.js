@@ -1,13 +1,13 @@
-
 const express = require('express');
+const { addStudent, getAllStudents, getStudentID, updateStudents, deleteStudents } = require('../controllers/studentcontroller.js');
 
-const router =express.Router();
-const {addStudent, getAllStudents, getStudentID, updateStudents, deleteStudents} = require('../controllers/studentcontroller.js');
+const router = express.Router();
 
+// Student management endpoints
 router.post('/add', addStudent);
-router.get('/showstudents', getAllStudents);
-router.get('/student/:id',getStudentID);
-router.put('/updatestudent/:id', updateStudents);
-router.delete('/deletestudent/:id', deleteStudents);
+router.get('/all', getAllStudents);
+router.get('/:id', getStudentID);
+router.put('/:id', updateStudents);
+router.delete('/:id', deleteStudents);
 
-module.exports= router;
+module.exports = router;

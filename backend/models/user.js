@@ -10,36 +10,36 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Password is Required'], // Fixed label
-        minlength: [6, 'Password must be 6 characters long'], // Fixed logic to match your message
-        select: false
+        required: [true, 'Password is Required'],
+        minlength: [6, 'Password must be 6 characters long'],
+        select: false // Excludes password from query results by default for security
     },
     email: {
         type: String,
         trim: true,
         unique: true,
         lowercase: true,
-        required: [true, 'Email is Required'], // Fixed label
+        required: [true, 'Email is Required'],
     },
     role: {
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
     }
-}, { timestamps: true }); // Fixed 'timestamp' to 'timestamps'
+}, { timestamps: true });
 
-// Hashing logic
-userSchema.pre('save', async function (next) { // Added next
+// Middleware to hash passwords before saving them to the database
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     
-    const salt = await bcrypt.genSalt(10); // Changed .salt to .genSalt
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 
-// Match password logic
-userSchema.methods.matchPassword = async function (enteredPassword) { // Added 's', fixed camelCase
-    return await bcrypt.compare(enteredPassword, this.password); // Fixed 'passsword' typo
-}
+// Instance method to verify passwords during user login
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model('User', userSchema);

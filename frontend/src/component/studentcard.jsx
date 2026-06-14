@@ -1,20 +1,25 @@
 import { Card, Button, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Reusable card component displaying detailed student information.
+ */
 const StudentCard = ({ student, onDelete }) => {
-  console.log("Student Data:", student);
-
-  const HandleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${student.name}`)) {
-      onDelete(StudentCard._id);
-    }
-  };
   const navigate = useNavigate();
-  const handleEdit = () => {
-    navigate(`/edit/${student._id}`)
-  };
 
   if (!student) return null;
+
+  // Prompts confirmation before execution
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${student.name}?`)) {
+      onDelete(student._id); 
+    }
+  };
+
+  // Navigates user to the editing portal
+  const handleEdit = () => {
+    navigate(`/edit/${student._id}`);
+  };
 
   return (
     <Card className="shadow-sm mb-3" style={{ width: "18rem" }}>
@@ -37,11 +42,12 @@ const StudentCard = ({ student, onDelete }) => {
           </div>
         </Card.Text>
       </Card.Body>
+      
       <Card.Footer className="d-flex justify-content-between">
         <Button variant="success" size="sm" onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="danger" size="sm" onClick={HandleDelete}>
+        <Button variant="danger" size="sm" onClick={handleDelete}>
           Delete
         </Button>
       </Card.Footer>
