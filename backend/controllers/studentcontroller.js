@@ -42,7 +42,7 @@ const getAllStudents = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Serve Error",
+            message: "Server Error",
             error: error.message
         })
     }
