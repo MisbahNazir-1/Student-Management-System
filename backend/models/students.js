@@ -43,4 +43,4 @@ const studentSchema = new mongoose.Schema({
 
 //exporting this file
 // module.exports = mongoose.model('Student',studentSchema, "students");
-module.exports = mongoose.model('Student', studentSchema, 'students');
+module.exports = mongoose.model('students', studentSchema, 'students');
