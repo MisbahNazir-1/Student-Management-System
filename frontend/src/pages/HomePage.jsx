@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, handleDelete } from 'react';
 import { getAllStudents, deleteStudent } from '../api/studentapi'; 
 import StudentCard from '../component/studentcard';
 import { Alert } from 'react-bootstrap';
