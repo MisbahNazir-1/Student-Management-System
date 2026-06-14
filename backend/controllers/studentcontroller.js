@@ -1,5 +1,6 @@
 const { findPackageJSON } = require('node:module');
-const Student = require('../models/students')
+const Student = require('../models/students');
+const connectDB = require('../config/db');
 
 // inserting data of students
 const addStudent = async (req, res) => {
@@ -27,6 +28,7 @@ return res.status(200).json({
 // gettings data of all students
 const getAllStudents = async (req, res) => {
     try {
+        await connectDB();
 
         const students = await Student.find();
 
