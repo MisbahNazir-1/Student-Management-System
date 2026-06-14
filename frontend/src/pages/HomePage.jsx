@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllStudents } from '../api/studentapi'; 
+import { getAllStudents, deleteStudent } from '../api/studentapi'; 
 import StudentCard from '../component/studentcard';
 import { Alert } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
@@ -16,7 +16,7 @@ const HomePage = () => {
         setLoading(true);
         const response = await getAllStudents(); 
         // Use response.dataA because that's what your backend sends
-        setStudents(response.dataA || []); 
+        setStudents(response.data || []); 
     } catch (error) {
         setError('Could not find Students!!!');
     } finally {
@@ -31,7 +31,7 @@ setTimeout(() => setMessage(null), 3000);
         fetchStudents();
     }, []);
 
-    const handleDelete = async()=>{
+    const handleDelete = async(id)=>{
         try{
             const data = await deleteStudent(id)
             setStudents(prev=>prev.filter(s=>s._id !== id));
@@ -39,7 +39,7 @@ setTimeout(() => setMessage(null), 3000);
         }catch(err){
        setMessage({text:'Could not delete the Student'})
         }
-    }
+    };
 
     return (
         <div className="container mt-4">
@@ -56,7 +56,7 @@ setTimeout(() => setMessage(null), 3000);
                 <Row xs={1} md={2} lg={3}/>
                 {students && students.length > 0 ? (
                     students.map((s) => (
-                        <StudentCard key={s._id} student={s} onDelete='HandleDelete' />
+                        <StudentCard key={s._id} student={s} onDelete={HandleDelete} />
                     ))
                 ) : (
                     !loading && <p>No student data found.</p>
