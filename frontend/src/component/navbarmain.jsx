@@ -7,11 +7,11 @@ function NavbarMain() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Student Management System</Navbar.Brand>
+        <Navbar.Brand  onClick={() =>navigate('/')}>Student Management System</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link onClick={() =>navigate('/')}>Home</Nav.Link>
           </Nav>
           <button
             type="submit"
