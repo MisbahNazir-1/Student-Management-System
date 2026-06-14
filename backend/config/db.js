@@ -1,22 +1,30 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-// Ek global variable banayein connection state ko track karne ke liye
-let isConnected = false;
+// Serverless function ke liye connection caching lazmi hai
+let isConnected = false; 
 
 const connectDB = async () => {
-  // Agar pehle se connected hai, toh wahin se return ho jao
-  if (isConnected) {
-    console.log("Using existing database connection");
-    return;
-  }
+    mongoose.set('strictQuery', true);
 
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    isConnected = !!conn.connections[0].readyState;
-    console.log("Database connection established successfully!");
-  } catch (error) {
-    console.error('something went wrong!', error.message);
-  }
+    if (!process.env.MONGO_URI) {
+        return console.log('MONGO_URI is missing in env variables');
+    }
+
+    if (isConnected) {
+        console.log('Using existing database connection');
+        return;
+    }
+
+    try {
+        const db = await mongoose.connect(process.env.MONGO_URI, {
+            bufferCommands: false, // Yeh line buffering timeout ko rokay gi
+        });
+
+        isConnected = db.connections[0].readyState;
+        console.log('MongoDB Connected Successfully');
+    } catch (error) {
+        console.log('MongoDB connection error:', error.message);
+    }
 };
 
-module.exports = connectDB;
+export default connectDB;
