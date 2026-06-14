@@ -1,26 +1,29 @@
 const mongoose = require('mongoose');
 
-// Serverless state caching
-let isConnected = false;
+// Cache connection to reuse it across serverless function calls
+let cached = global.mongoose;
 
-const connectDB = async () => {
-  // Agar pehle se connected hai toh bypass karo
-  if (isConnected) {
-    console.log("Using existing database connection");
-    return;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  try {
-    // bufferCommands: false lagane se Mongoose freeze nahi hoga
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      bufferCommands: false
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false, // Yeh line timeout error ko rokay gi
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((mongoose) => {
+      return mongoose;
     });
-    
-    isConnected = !!conn.connections[0].readyState;
-    console.log("Database connection established successfully!");
-  } catch (error) {
-    console.error('something went wrong!', error.message);
   }
-};
+  
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
 
 module.exports = connectDB;
