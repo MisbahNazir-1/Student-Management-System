@@ -56,7 +56,7 @@ setTimeout(() => setMessage(null), 3000);
                 <Row xs={1} md={2} lg={3}/>
                 {students && students.length > 0 ? (
                     students.map((s) => (
-                        <StudentCard key={s._id} student={s} onDelete={HandleDelete} />
+                        <StudentCard key={s._id} student={s} onDelete={handleDelete} />
                     ))
                 ) : (
                     !loading && <p>No student data found.</p>
