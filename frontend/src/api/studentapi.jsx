@@ -8,7 +8,7 @@ const api = axios.create({
 })
 
 //creating a function that is getting all students API
-export const getAllStudents = async() => ( await api.get('/api/students/showstudents')).data;
+export const getAllStudents = async() => ( await api.get('/api/students/all')).data;
 
 export const getStudentsById = async(id) => (await api.get(`/api/students/student/${id}`)).data
 
