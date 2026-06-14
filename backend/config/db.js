@@ -1,16 +1,22 @@
 const mongoose = require('mongoose');
 
-//establishing the connection of mongodb database
+// Ek global variable banayein connection state ko track karne ke liye
+let isConnected = false;
+
 const connectDB = async () => {
-    try{
-    //getting mongodb connection from env file
-    const conn = await mongoose.connect(process.env.MONGO_URI)
-    console.log("Database connection establised successfully");
-    }catch(error){
-        console.error('something went wrong!',error.message)
-    }
-}
+  // Agar pehle se connected hai, toh wahin se return ho jao
+  if (isConnected) {
+    console.log("Using existing database connection");
+    return;
+  }
 
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    isConnected = !!conn.connections[0].readyState;
+    console.log("Database connection established successfully!");
+  } catch (error) {
+    console.error('something went wrong!', error.message);
+  }
+};
 
-//exporting this file so we can use it anywhere in project
 module.exports = connectDB;
