@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: 'https://student-management-system-lplu.vercel.app',
     headers:{
         'Content-Type':'application/json'
     }
 })
+
 
 //creating a function that is getting all students API
 export const getAllStudents = async() => ( await api.get('/api/students/all')).data;
