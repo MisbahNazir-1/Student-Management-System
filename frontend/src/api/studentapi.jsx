@@ -14,7 +14,7 @@ export const getAllStudents = async() => ( await api.get('/api/students/all')).d
 export const getStudentsById = async(id) => (await api.get(`/api/students/student/${id}`)).data
 
 
-export const addStudent = async(data) => (await api.post(`/api/students/addstudent`, data)).data
+export const addStudent = async(data) => (await api.post(`/api/students/add`, data)).data
 
 export const updateStudent = async(id,data) => (await api.post(`/api/students/updatestudent/${id}`, data)).data
 
