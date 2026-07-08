@@ -68,3 +68,50 @@
  .nav-links li:hover {
      background: var(--primary-green);
  }
+
+
+ 
+.auth-container {
+  min-height: 85vh;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.auth-title {
+  color: #2c3e50;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.auth-btn {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.auth-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+  color: #2980b9;
+}

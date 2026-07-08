@@ -4,6 +4,10 @@ import HomePage from "./pages/HomePage";
 import StudentCard from "./component/studentcard";
 import AddStudentPage from "./pages/AddStudentPage";
 import EditStudentPage from "./pages/EditStudentPage";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
+import ProtectedRoute from "./component/protectedroute";
+
 
 function App() {
   return (
@@ -11,10 +15,28 @@ function App() {
       <NavbarMain />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/add" element={<AddStudentPage />} />
-        <Route path="/all" element={<StudentCard />} />
-        <Route path="/edit/:id" element={<EditStudentPage />} />
+        <Route path="/login" element={<LoginPage />} />
+<Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        } />
+        <Route path="/add" element={
+          <ProtectedRoute>
+            <AddStudentPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/all" element={
+          <ProtectedRoute>
+            <StudentCard />
+          </ProtectedRoute>
+        } />
+        <Route path="/edit/:id" element={
+          <ProtectedRoute>
+            <EditStudentPage />
+          </ProtectedRoute>
+        } />
       </Routes>
     </BrowserRouter>
   );

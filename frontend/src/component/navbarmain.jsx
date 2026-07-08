@@ -4,6 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 function NavbarMain() {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');  
+    navigate('/login'); 
+};
+
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -20,6 +27,7 @@ function NavbarMain() {
           >
             Add Student
           </button>
+          <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
