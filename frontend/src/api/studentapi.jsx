@@ -7,27 +7,16 @@ const api = axios.create({
     }
 });
 
-// 1. Get All Students
-export const getAllStudents = async () => {
-    return await api.get('/api/students/all');
-};
 
-// 2. Get Student By ID
-export const getStudentsById = async (id) => {
-    return await api.get(`/api/students/${id}`);
-};
+export const getAllStudents = async () => (await api.get('/api/students/all')).data;
 
-// 3. Add Student
-export const addStudent = async (data) => {
-    return await api.post('/api/students/add', data);
-};
 
-// 4. Update Student
-export const updateStudent = async (id, data) => {
-    return await api.put(`/api/students/${id}`, data);
-};
+export const getStudentsById = async (id) => (await api.get(`/api/students/${id}`)).data;
 
-// 5. Delete Student
-export const deleteStudent = async (id) => {
-    return await api.delete(`/api/students/${id}`);
-};
+export const addStudent = async (data) => (await api.post('/api/students/add', data)).data;
+
+export const updateStudent = async (id, data) => (await api.put(`/api/students/${id}`, data)).data;
+
+export const deleteStudent = async (id) => (await api.delete(`/api/students/${id}`)).data;
+
+export default { getAllStudents, getStudentsById, addStudent, updateStudent, deleteStudent };

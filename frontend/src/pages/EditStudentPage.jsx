@@ -27,17 +27,17 @@ const EditStudentPage = () => {
     const fetchStudent = async () => {
       try {
         setFetchingStudent(true);
-        // Corrected function name to match import
-        const response = await getStudentsById(id);
-        const data = response.data;
+const response = await getStudentsById(id);
+const data = response;
 
-        setFormData({
-          name: data.name || "",
-          email: data.email || "",
-          course: data.course || "",
-          age: data.age || "", 
-          city: data.city || "",
-        });
+setFormData({
+  name: data.name || "",
+  email: data.email || "",
+  course: data.course || "",
+  age: data.age || "", 
+  city: data.city || "",
+});
+
       } catch (err) {
         setFetchError("Could not fetch the student");
       } finally {
