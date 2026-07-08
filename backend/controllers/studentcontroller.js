@@ -1,11 +1,11 @@
 const Student = require('../models/students');
 const connectDB = require('../config/db');
 
-/**
- * Creates a new student record
- */
 const addStudent = async (req, res) => {
     try {
+        // 1. Sab se pehle database connection ensure karein:
+        await connectDB(); 
+
         const { name, email, course, age, city } = req.body;
 
         if (!name || !email || !course || !age || !city) {
@@ -26,6 +26,7 @@ const addStudent = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Server Error', error: error.message });
     }
 };
+
 
 /**
  * Retrieves all student records
