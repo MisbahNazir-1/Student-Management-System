@@ -22,12 +22,12 @@ export const addStudent = async (data) => {
     return await api.post('/api/students/add', data);
 };
 
-// 4. Update Student 
+// 4. Update Student
 export const updateStudent = async (id, data) => {
     return await api.put(`/api/students/${id}`, data);
 };
 
-// 5. Delete Student 
+// 5. Delete Student
 export const deleteStudent = async (id) => {
     return await api.delete(`/api/students/${id}`);
 };
