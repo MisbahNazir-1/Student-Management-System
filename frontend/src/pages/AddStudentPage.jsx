@@ -26,33 +26,43 @@ const AddStudentPage = () => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // Simple call to validate before submitting
-        validateForm(); 
+    
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+   if (!validateForm()) {
+        setMessage({ variant: "danger", text: "Please fix the validation errors first." });
+        return; 
+    }
+    
+    try {
+        setLoading(true);
+        setMessage(null); 
         
-        try {
-            setLoading(true);
-            const data = await addStudent({ ...formData });
-            setMessage({ variant: "success", text: "Student added successfully!" });
-            setTimeout(() => navigate('/'), 2000);
-        } catch (err) {
-            setMessage({ variant: "danger", text: "Failed to add student." });
-        } finally {
-            setLoading(false);
-        }
-    };
+        const data = await addStudent({ ...formData });
+        setMessage({ variant: "success", text: "Student added successfully!" });
+        setTimeout(() => navigate('/'), 2000);
+    } catch (err) {
+        setMessage({ variant: "danger", text: "Failed to add student." });
+    } finally {
+        setLoading(false);
+    }
+};
 
-    const validateForm = () => {
-        const newErrors = {};
-        if (!formData.name) newErrors.name = 'Please enter your Full name!';
-        if (!formData.email) newErrors.email = 'Please enter your Email!';
-        if (!formData.course) newErrors.course = 'Please select your course!';
-        if (formData.age === '') newErrors.age = 'Age field is required!';
-        if (!formData.city) newErrors.city = 'Please enter your City!';
-        setError(newErrors);
-    };
+
+   const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = 'Please enter your Full name!';
+    if (!formData.email) newErrors.email = 'Please enter your Email!';
+    if (!formData.course) newErrors.course = 'Please select your course!';
+    if (formData.age === '') newErrors.age = 'Age field is required!';
+    if (!formData.city) newErrors.city = 'Please enter your City!';
+    
+    setError(newErrors);
+    
+    return Object.keys(newErrors).length === 0; 
+};
+
 
     return (
         <div>
