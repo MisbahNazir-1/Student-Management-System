@@ -3,7 +3,6 @@ const connectDB = require('../config/db');
 
 const addStudent = async (req, res) => {
     try {
-        // 1. Sab se pehle database connection ensure karein:
         await connectDB(); 
 
         const { name, email, course, age, city } = req.body;
