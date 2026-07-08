@@ -26,8 +26,11 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'active', message: 'API Gateway running smoothly' });
 });
 
-// Server Initialization
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Production server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
