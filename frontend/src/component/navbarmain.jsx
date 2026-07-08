@@ -72,7 +72,7 @@ function NavbarMain() {
                 <Button 
                   variant="outline-primary"
                   onClick={handleDemoAccess}
-                  className="px-4 py-2 fw-semibold rounded-3 border-secondary-subtle text-dark-emphasis"
+                  className="px-4 me-2  py-2 fw-semibold rounded-3 border-secondary-subtle text-dark-emphasis"
                   style={{ borderColor: "#d1d5db" }}
                 >
                   Demo Access

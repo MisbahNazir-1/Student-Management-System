@@ -9,10 +9,22 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
+    // Hardcoded demo credentials matching your database records
+    const DEMO_EMAIL = "admin@example.com";
+    const DEMO_PASSWORD = "password123";
+
     // Dynamic input handler
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCredentials(prev => ({ ...prev, [name]: value }));
+    };
+
+    // Auto-fill feature for quick testing
+    const handleAutoFillDemo = () => {
+        setCredentials({
+            email: DEMO_EMAIL,
+            password: DEMO_PASSWORD
+        });
     };
 
     // Form submission logic
@@ -27,7 +39,6 @@ const LoginPage = () => {
             setLoading(true);
             setMessage(null);
             
-            // Sanitize payload data
             const payload = {
                 email: credentials.email.trim().toLowerCase(),
                 password: credentials.password
@@ -35,13 +46,11 @@ const LoginPage = () => {
             
             const data = await loginUser(payload);
             
-            // Save session tokens securely to localStorage
+            // Save authentic sessions generated via API
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
             setMessage({ variant: "success", text: data.message || "Logged in successfully!" });
-            
-            // Redirect to home view upon success
             setTimeout(() => navigate('/'), 1500);
         } catch (err) {
             const errMsg = err.response?.data?.message || "Failed to log in. Please try again.";
@@ -53,18 +62,18 @@ const LoginPage = () => {
 
     return (
         <Container 
-            className="d-flex align-items-center justify-content-center min-vh-screen p-3"
+            className="d-flex flex-column align-items-center justify-content-center min-vh-screen p-3"
             style={{ backgroundColor: "#f8fafc" }}
         >
             <Card 
                 className="p-4 md-p-5 border-0 shadow-lg w-100" 
                 style={{ maxWidth: "420px", borderRadius: "16px" }}
             >
-                <Card.Body class="p-0">
+                <Card.Body className="p-0">
                     {/* Header Section */}
                     <div className="text-center mb-4">
                         <h2 className="fw-bold tracking-tight text-dark mb-1">Welcome Back</h2>
-                        <p class="text-muted small">Please sign in to your account</p>
+                        <p className="text-muted small">Please sign in to your account</p>
                     </div>
                     
                     {/* Status Feedback Alert */}
@@ -103,20 +112,39 @@ const LoginPage = () => {
                         <Button 
                             type="submit" 
                             variant="primary" 
-                            className="w-100 py-2.5 fw-semibold rounded-3 border-0 shadow-sm" 
+                            className="w-100 py-2.5 fw-semibold rounded-3 border-0 shadow-sm mb-3" 
                             style={{ backgroundColor: "#4f46e5" }}
                             disabled={loading}
                         >
                             {loading ? "Checking details..." : "Sign In"}
                         </Button>
 
-                        {/* Footer Redirect Route Link */}
-                        <div className="text-center mt-4 small text-muted">
+                        {/* Link to Register */}
+                        <div className="text-center small text-muted">
                             <span>Don't have an account? </span>
                             <Link to="/register" className="fw-semibold text-decoration-none" style={{ color: "#4f46e5" }}>Create one</Link>
                         </div>
                     </Form>
                 </Card.Body>
+            </Card>
+
+            {/* Premium Demo Badge Helper Box underneath the card */}
+            <Card 
+                className="mt-3 p-3 border-0 shadow-sm w-100 text-center" 
+                style={{ maxWidth: "420px", borderRadius: "12px", backgroundColor: "#f1f5f9" }}
+            >
+                <p className="text-secondary small fw-bold mb-1 uppercase tracking-wide">Testing this App?</p>
+                <div className="text-muted small mb-2">
+                    Use Email: <strong className="text-dark">{DEMO_EMAIL}</strong> | Pass: <strong className="text-dark">{DEMO_PASSWORD}</strong>
+                </div>
+                <Button 
+                    variant="outline-secondary" 
+                    size="sm" 
+                    onClick={handleAutoFillDemo}
+                    className="fw-semibold rounded-2 py-1 bg-white text-dark border-light-subtle"
+                >
+                    ⚡ Auto-Fill Demo Credentials
+                </Button>
             </Card>
         </Container>
     );
