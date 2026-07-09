@@ -73,12 +73,15 @@ const getStudentID = async (req, res) => {
 
 /**
  * Updates an existing student record
- */
+ */const mongoose = require('mongoose'); 
 const updateStudents = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ success: false, message: "Invalid Student ID Format" });
+        }
+
         const { name, email, course, age, city } = req.body;
 
-        // Use standard { new: true } to return the modified document instead of the original
         const student = await Student.findByIdAndUpdate(
             req.params.id,
             { name, email, course, age, city },
@@ -95,6 +98,7 @@ const updateStudents = async (req, res) => {
             data: student
         });
     } catch (error) {
+        console.error("Asli Backend Error:", error.message); // Yeh line Vercel logs mein asli error dikhaye gi
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 };
