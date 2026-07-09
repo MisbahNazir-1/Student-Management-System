@@ -2,10 +2,11 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
+// Stable token generation method
 const signToken = (id) => {
     const secret = process.env.JWT_SECRET || 'fallback_secret_key_for_safety';
     const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
-    return jwt.sign({ id: id.toString() }, secret, { expiresIn });
+    return jwt.sign({ id }, secret, { expiresIn });
 };
 
 // Register Function
@@ -22,9 +23,8 @@ const register = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Email already registered!' });
         }
 
-        // Direct user creation
         const newUser = await User.create({ name, email, password });
-        const token = signToken(newUser._id);
+        const token = signToken(newUser._id.toString());
 
         return res.status(201).json({
             success: true,
@@ -33,7 +33,7 @@ const register = async (req, res) => {
             user: { id: newUser._id, name, email, role: newUser.role }
         });
     } catch (error) {
-        console.error("REGISTER CRASH LOG:", error);
+        console.error("REGISTER CRASH LOG:", error.message);
         return res.status(500).json({ success: false, message: 'Something went wrong while creating account', error: error.message });
     }
 };
@@ -64,7 +64,7 @@ const login = async (req, res) => {
             });
         }
 
-        const token = signToken(user._id);
+        const token = signToken(user._id.toString());
 
         return res.status(200).json({
             success: true,
@@ -73,7 +73,7 @@ const login = async (req, res) => {
             user: { id: user._id, name: user.name, email: user.email, role: user.role }
         });
     } catch (error) {
-        console.error("LOGIN CRASH LOG:", error);
+        console.error("LOGIN CRASH LOG:", error.message);
         return res.status(500).json({ success: false, message: 'Something went wrong', error: error.message });
     }
 };
