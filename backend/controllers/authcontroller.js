@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const connectDB = require('../config/db');
 
 // Stable token generation method
 const signToken = (id) => {
@@ -12,6 +13,9 @@ const signToken = (id) => {
 // Register Function
 const register = async (req, res) => {
     try {
+        // Ensure database connection is active before running queries
+        await connectDB();
+
         const { name, email, password } = req.body;
 
         if (!name || !email || !password) {
@@ -41,6 +45,9 @@ const register = async (req, res) => {
 // Login Function
 const login = async (req, res) => {
     try {
+        // Ensure database connection is active before running queries
+        await connectDB();
+        
         const { email, password } = req.body;
         
         if (!email || !password) {
