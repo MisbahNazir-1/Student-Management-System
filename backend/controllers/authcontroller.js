@@ -1,13 +1,44 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs'); 
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 const signToken = (id) => {
     const secret = process.env.JWT_SECRET || 'fallback_secret_key_for_safety';
     const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
-    return jwt.sign({ id }, secret, { expiresIn });
+    return jwt.sign({ id: id.toString() }, secret, { expiresIn });
 };
 
+// Register Function
+const register = async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ success: false, message: 'Please enter all fields' });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: 'Email already registered!' });
+        }
+
+        // Direct user creation
+        const newUser = await User.create({ name, email, password });
+        const token = signToken(newUser._id);
+
+        return res.status(201).json({
+            success: true,
+            message: 'Account created successfully!',
+            token,
+            user: { id: newUser._id, name, email, role: newUser.role }
+        });
+    } catch (error) {
+        console.error("REGISTER CRASH LOG:", error);
+        return res.status(500).json({ success: false, message: 'Something went wrong while creating account', error: error.message });
+    }
+};
+
+// Login Function
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -16,7 +47,6 @@ const login = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Please enter credentials' });
         }
         
-        // Fetch user with password explicitly
         const user = await User.findOne({ email }).select('+password');
 
         if (!user) {
@@ -26,7 +56,7 @@ const login = async (req, res) => {
             });
         }
 
-       const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({
                 success: false,
@@ -47,3 +77,5 @@ const login = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Something went wrong', error: error.message });
     }
 };
+
+module.exports = { register, login };
