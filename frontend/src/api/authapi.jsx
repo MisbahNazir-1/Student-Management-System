@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://vercel.app',
+    baseURL: 'https://student-management-system-lplu.vercel.app',
     headers: {
         'Content-Type': 'application/json'
     }
