@@ -9,9 +9,6 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
-    // Hardcoded demo credentials matching your database records
-    const DEMO_EMAIL = "admin@example.com";
-    const DEMO_PASSWORD = "password123";
 
     // Dynamic input handler
     const handleChange = (e) => {
@@ -126,25 +123,6 @@ const LoginPage = () => {
                         </div>
                     </Form>
                 </Card.Body>
-            </Card>
-
-            {/* Premium Demo Badge Helper Box underneath the card */}
-            <Card 
-                className="mt-3 p-3 border-0 shadow-sm w-100 text-center" 
-                style={{ maxWidth: "420px", borderRadius: "12px", backgroundColor: "#f1f5f9" }}
-            >
-                <p className="text-secondary small fw-bold mb-1 uppercase tracking-wide">Testing this App?</p>
-                <div className="text-muted small mb-2">
-                    Use Email: <strong className="text-dark">{DEMO_EMAIL}</strong> | Pass: <strong className="text-dark">{DEMO_PASSWORD}</strong>
-                </div>
-                <Button 
-                    variant="outline-secondary" 
-                    size="sm" 
-                    onClick={handleAutoFillDemo}
-                    className="fw-semibold rounded-2 py-1 bg-white text-dark border-light-subtle"
-                >
-                    ⚡ Auto-Fill Demo Credentials
-                </Button>
             </Card>
         </Container>
     );
